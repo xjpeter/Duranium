@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Duranium.Common
 {
@@ -14,35 +13,35 @@ namespace Duranium.Common
             _log = log;
         }
 
-        public async Task<IResponse> ExecuteAsync(IRequest request)
+        public IResponse Execute(IRequest request)
         {
             var typedRequest = (TRequest)request;
 
-            _log.Debug($"Executing BeforeExecuteAsync on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
+            _log.Debug($"Executing BeforeExecute on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
 
-            typedRequest = await BeforeExecuteAsync(typedRequest);
+            typedRequest = BeforeExecute(typedRequest);
 
-            _log.Debug($"Executing HandleAsync on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
+            _log.Debug($"Executing Handle on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
 
-            var response = await HandleAsync(typedRequest);
+            var response = Handle(typedRequest);
 
-            _log.Debug($"Executing AfterExecuteAsync on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
+            _log.Debug($"Executing AfterExecute on request : {request.GetType().Name}, Id - {request.Id} @ {DateTime.Now}");
 
-            response = await AfterExecuteAsync(request, response);
+            response = AfterExecute(request, response);
 
             return response;
         }
 
-        protected abstract Task<TResponse> HandleAsync(TRequest request);
+        protected abstract TResponse Handle(TRequest request);
 
-        protected virtual Task<TRequest> BeforeExecuteAsync(TRequest request)
+        protected virtual TRequest BeforeExecute(TRequest request)
         {
-            return Task.FromResult(request);
+            return request;
         }
 
-        protected virtual Task<TResponse> AfterExecuteAsync(IRequest request, TResponse response)
+        protected virtual TResponse AfterExecute(IRequest request, TResponse response)
         {
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

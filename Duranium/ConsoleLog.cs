@@ -8,7 +8,7 @@ namespace Duranium
     {
         public void Debug(string message)
         {
-            Console.WriteLine(message);
+            //Console.WriteLine(message);
         }
     }
 }

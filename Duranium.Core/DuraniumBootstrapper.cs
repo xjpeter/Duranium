@@ -14,7 +14,7 @@ namespace Duranium.Core
         public static void Initialise(ContainerBuilder builder, string assemblySearchPattern)
         {
             builder.RegisterType<RouterService>().As<IRouterService>().SingleInstance();
-            builder.RegisterType<RequestResponseReflectionService>().As<IRequestResponseReflectionService>().SingleInstance();
+            builder.RegisterType<ReflectionService>().As<IReflectionService>().SingleInstance();
 
             ConfigureDuraniumScan(builder, assemblySearchPattern);
         }

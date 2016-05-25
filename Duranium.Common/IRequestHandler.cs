@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace Duranium.Common
+﻿namespace Duranium.Common
 {
     public interface IRequestHandler
     {
-        Task<IResponse> ExecuteAsync(IRequest request);
+        IResponse Execute(IRequest request);
     }
 
     public interface IRequestHandler<TRequest, TResponse> : IRequestHandler

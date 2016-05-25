@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 using Duranium.Common;
 
 namespace Duranium.Test2
@@ -12,7 +9,7 @@ namespace Duranium.Test2
         {
         }
 
-        protected override Task<Test2Response> HandleAsync(Test2Request request)
+        protected override Test2Response Handle(Test2Request request)
         {
             //await Task.Delay(TimeSpan.FromSeconds(5));
 
@@ -21,7 +18,7 @@ namespace Duranium.Test2
 
             //return new Test1Response();
 
-            return Task.FromResult(new Test2Response());
+            return new Test2Response();
         }
     }
 }

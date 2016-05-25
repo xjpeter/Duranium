@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 
 using Autofac;
 
@@ -27,17 +25,24 @@ namespace Duranium
 
             var routerService = container.Resolve<IRouterService>();
 
-            Observable.Interval(TimeSpan.FromSeconds(2))
-                      .Select(interval =>
-                              {
-                                  if(interval % 2 == 0)
-                                  {
-                                      return new Test2Request { Id = Guid.NewGuid() } as IRequest;
-                                  }
+            var count = 0;
 
-                                  return new Test1Request {Id = Guid.NewGuid()} as IRequest;
-                              }).SelectMany(request => routerService.ExecuteRequest(request).ToObservable())
-                    .Subscribe();
+            while (true)
+            {
+                IRequest request;
+                if (count%2 == 0)
+                {
+                    request = new Test2Request {Id = Guid.NewGuid()};
+                }
+                else
+                {
+                    request = new Test1Request {Id = Guid.NewGuid()};
+                }
+
+                routerService.ExecuteRequest(request);
+
+                count++;
+            }
 
             Console.ReadKey();
         }
